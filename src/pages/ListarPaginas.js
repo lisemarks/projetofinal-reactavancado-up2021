@@ -41,7 +41,7 @@ const RenderDeleteButton = (props) => {
           <div>
             <Button variant="contained" onClick={handleRemove}>
               Sim
-            </Button>
+            </Button> &nbsp;
             <Button variant="contained" onClick={fecharDialog}>
               Não
             </Button>

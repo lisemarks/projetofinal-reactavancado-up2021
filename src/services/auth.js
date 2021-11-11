@@ -10,8 +10,8 @@ function isAuthenticated() {
     localStorage.setItem("token", token);
   }
 
-  function logout() {
+  function deslogar() {
     localStorage.removeItem("token");
   }
   
-  export { isAuthenticated, getToken, login, logout };
+  export { isAuthenticated, getToken, login, deslogar };

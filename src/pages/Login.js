@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
 import Box from '@mui/material/Box';
@@ -9,13 +9,8 @@ import TextField from '@mui/material/TextField';
 import { authenticate } from '../services/api'
 import { isAuthenticated, login } from '../services/auth';
 
-import { Field, Form, Formik } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
-const initialValues = {
-    login: '',
-    senha: ''
-  };
 
 const schema = Yup.object().shape({
   login: Yup.string()
@@ -25,7 +20,6 @@ const schema = Yup.object().shape({
 });
 
 function Login() {
-  const [fields, setFields] = useState({ login: "", senha: "" });
   const history = useHistory();
 
   useEffect(() => {
@@ -34,51 +28,34 @@ function Login() {
     }
   }, []);
 
-  function handleChange(event) {
-    const fieldName = event.target.name;
-    const value = event.target.value;
-    setFields({ ...fields, [fieldName]: value });
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    try
-    {
-        const response = await authenticate(fields.login, fields.senha);
+  const formik = useFormik({
+    initialValues: {
+        login: '',
+        senha: ''
+    },
+    validationSchema: schema,
+    onSubmit: async (values) => {
+        const response = await authenticate(values.login, values.senha);
         if (response.status === 200 && response.data.autenticacao === true) {
             login(response.data.token);
             history.push("/");
         }
-    }
-    catch(error)
-    {
-        alert("Usuário não encontrado");
-    }
-  }
-
+    },
+  });
   return(
    
     <Container maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 5 }}>
-      <Box component="form" onSubmit={ handleSubmit }>
-        <TextField
-          margin="normal"
-          label="Usuário"
-          variant="outlined"
-          fullWidth
-          name="login"
-          value={ fields.login }
-          onChange={ handleChange }
-        />
-        <TextField
-          margin="normal"
-          label="Senha"
-          variant="outlined"
-          type="password"
-          fullWidth
-          name="senha"
-          value={ fields.senha }
-          onChange={ handleChange }
-        />
+      <Box component="form" onSubmit={ formik.handleSubmit }>
+
+      <TextField label="Usuário" name="login" margin="normal" variant="outlined" fullWidth
+                    value={formik.values.login} onChange={formik.handleChange}
+                    error={formik.touched.login && Boolean(formik.errors.login)}
+                    helperText={formik.touched.login && formik.errors.login} />
+
+      <TextField label="Senha" name="senha" margin="normal" variant="outlined" type="password" fullWidth
+                    value={formik.values.senha} onChange={formik.handleChange}
+                    error={formik.touched.senha && Boolean(formik.errors.senha)}
+                    helperText={formik.touched.senha && formik.errors.senha} />  
         <Button 
           variant="contained"
           fullWidth

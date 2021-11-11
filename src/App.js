@@ -5,10 +5,12 @@ import Login from './pages/Login'
 import ListarPaginas from './pages/ListarPaginas'
 import InserirPagina from './pages/InserirPagina'
 import AlterarPagina from './pages/AlterarPagina'
+import Cabecalho from './components/Cabecalho'
 
 function App() {
   return (
     <BrowserRouter>
+     { isAuthenticated() ? <Cabecalho /> : null }
       <Switch>
         <PrivateRoute exact path="/">
           <ListarPaginas />
