@@ -11,7 +11,6 @@ export async function authenticate(login, password) {
         senha: password
       });
       return response;
- 
 }
 
 api.interceptors.request.use((config) => {
@@ -20,14 +19,27 @@ api.interceptors.request.use((config) => {
     return config;
   });
 
-  export async function ExcluirCurso(id) {
-    const response = await api.delete(`/cursos/${id}`); 
-    console.log("Curso excluido", response);
+  export async function ExcluirPagina(id) {
+    const response = await api.delete(`/paginas/${id}`); 
     return response;
   }
 
-  export async function TrazCursos() {
+  export async function TrazPaginas() {
     const response = await api.get('/paginas');
-    console.log("Listar cursos", response);
+    return response;
+  }
+
+  export async function InsertPagina(data) {
+    const response = await api.post("/paginas", data);
+    return response;
+  }
+
+  export async function UpdatePagina(id, data) {
+    const response = await api.put(`/paginas/${id}`, data);
+    return response;
+  }
+  
+  export async function BuscarPaginaID(id) {
+    const response = await api.get(`/paginas/${id}`);
     return response;
   }

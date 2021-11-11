@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 
 import { Link } from 'react-router-dom';
 
-import { ExcluirCurso, TrazCursos } from "../services/api";
+import { ExcluirPagina, TrazPaginas } from "../services/api";
 import { IconButton, Button, Dialog} from '@mui/material';
 import { Delete } from "@mui/icons-material";
 import CreateIcon from '@mui/icons-material/Create';
@@ -16,9 +16,8 @@ const RenderDeleteButton = (props) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   function handleRemove() {
-    console.log(row)
-    ExcluirCurso(id).then(() => {
-      row.setRows((movie) => movie.filter((row) => row.id !== id));
+      ExcluirPagina(id).then(() => {
+      row.setRows((pagina) => pagina.filter((row) => row._id !== id));
       setIsDialogOpen(false);
     });
   }
@@ -37,7 +36,7 @@ const RenderDeleteButton = (props) => {
       <Dialog open={isDialogOpen}>
         <Box padding={4} display="flex" flexDirection="column" alignItems="center">
           <p>
-            Deseja Excluir o curso?
+            Deseja excluir a página?
           </p>
           <div>
             <Button variant="contained" onClick={handleRemove}>
@@ -52,7 +51,7 @@ const RenderDeleteButton = (props) => {
       <IconButton onClick={handleDialog}>
         <Delete />
       </IconButton>
-      <IconButton component={ Link } to={`/update/${id}`}>
+      <IconButton component={ Link } to={`/alterar/${id}`}>
       <CreateIcon />
       </IconButton>
     </>
@@ -66,20 +65,19 @@ const columns = [
   { field: "titulo", headerName: 'Titulo', width: 150 },
 ];
 
-function ListarCursos () {
+function ListarPaginas () {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    document.title = "Listar"
-    getMoviesFromApi();
+    document.title = "Listar páginas"
+    buscarPaginas();
   }, []);
 
-  async function getMoviesFromApi() {
-    const response = await TrazCursos();
-    const data = response.data.map((movie) => {
-      movie.id = movie.movieId;
-      movie.setRows = setRows;
-      return movie;
+  async function buscarPaginas() {
+    const response = await TrazPaginas();
+    const data = response.data.map((pagina) => {
+      pagina.setRows = setRows;
+      return pagina;
     })
     setRows(data);
   }
@@ -88,7 +86,7 @@ function ListarCursos () {
     <Container component="main">
       <Box sx={{ mt: 5 }}>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Cursos
+          Páginas do site
         </Typography>
         <div style={{ height: 600, width: '100%' }}>
           <DataGrid getRowId={(row) => row._id} columns={columns} rows={rows}>
@@ -99,4 +97,4 @@ function ListarCursos () {
   );
 }
 
-export default ListarCursos;
+export default ListarPaginas;

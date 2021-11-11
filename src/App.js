@@ -2,18 +2,22 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { isAuthenticated } from './services/auth';
 import Login from './pages/Login'
-import ListarCursos from './pages/ListarCursos'
+import ListarPaginas from './pages/ListarPaginas'
+import InserirPagina from './pages/InserirPagina'
+import AlterarPagina from './pages/AlterarPagina'
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <PrivateRoute exact path="/">
-          <ListarCursos />
+          <ListarPaginas />
         </PrivateRoute>
-        <PrivateRoute path="/create">
+        <PrivateRoute path="/inserir">
+          <InserirPagina />
         </PrivateRoute>
-        <PrivateRoute path="/update/:id/">
+        <PrivateRoute path="/alterar/:id/">
+        <AlterarPagina />
         </PrivateRoute>
         <Route path="/login">
           <Login />
@@ -22,9 +26,8 @@ function App() {
           Logout efetuado com sucesso
         </Route>
         <Route>
-          404
+          Página não encontrada
         </Route>
-        
       </Switch>
     </BrowserRouter>
   );
