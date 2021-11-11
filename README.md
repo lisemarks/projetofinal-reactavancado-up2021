@@ -11,8 +11,8 @@ $ npm install
 # Execute a aplicação em modo de desenvolvimento
 $ npm start
 
-# Visualização no Heroku
+# Visualização no Heroku do back
 <https://lisemar-node-aula1.herokuapp.com/>
 
-# Link para teste
-<https://projetofinal-reactavancado-up2021-fohzn7j2r-lisemarks.vercel.app/>
+# Link para teste do front
+<projetofinal-reactavancado-up2021.vercel.app>
