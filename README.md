@@ -3,7 +3,7 @@
 ### Rodando a aplicação
 
 # Clone o repositório
-$ git clone <https://github.com/lisemarks/cadastrocursos.git>
+$ git clone <https://github.com/lisemarks/projetofinal-reactavancado-up2021.git>
 
 # Instale as dependências
 $ npm install
